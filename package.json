@@ -6,6 +6,7 @@
   "author": "Alejandro <a.chataing.a@gmail.com>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },

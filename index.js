@@ -1,7 +1,12 @@
-require( 'dotenv' ).config();
+import { Client as DiscordClient } from 'discord.js';
+import express from 'express';
+import dotenv from 'dotenv';
+import { parse } from 'discord-command-parser';
+import pkg from 'pg';
+dotenv.config();
 const app = express();
-const client = new Discord.Client();
-const { Client } = require( 'pg' );
+const client = new DiscordClient();
+const { Client } = pkg;
 const connectionString = process.env.DATABASE_URL
 const commands = {
   'config': ( message, parsed ) => {
@@ -36,9 +41,8 @@ const database = new Client( {
   connectionString,
   ssl: { rejectUnauthorized: false }
 } );
-const Discord = require( 'discord.js' );
-const express = require( 'express' );
-const { parse } = require( 'discord-command-parser' );
+// const Discord = require( 'discord.js' );
+// const { parse } = require( 'discord-command-parser' );
 const port = process.env.PORT || 3000;
 let servers;
 
