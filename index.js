@@ -38,6 +38,7 @@ const commands = {
   }
 }
 var servers;
+var app = require( 'http' );
 
 const makeQuery = async ( query ) => {
   return await new Promise( async ( resolve, reject ) => {
