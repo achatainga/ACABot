@@ -20,7 +20,7 @@ const commands = {
           let result = await makeQuery( `UPDATE servers SET serv_prefix = '${parsed.arguments[ 1 ]}' WHERE serv_discord_id = ${message.guild.id}` );
           console.log( result );
           servers.rows[ index ].serv_prefix = parsed.arguments[ 1 ];
-          message.channel.send( embedMessage( 'success', `:white_check_mark: ${message.guild.name} Config settings updated`, `Command prefix set to: \`${parsed.arguments[ 1 ]}\`\nYou can also access the bot with the <@!789723522770927617>` ) );
+          message.channel.send( embedMessage( 'success', `:white_check_mark: ${message.guild.name} settings updated`, `Command prefix set to: \`${parsed.arguments[ 1 ]}\`\nYou can also access the bot with the <@!789723522770927617>` ) );
         } else {
           message.channel.send( embedMessage( 'danger', ':x: Config Prefix Fail', `Parameters: <prefix>config prefix <new_prefix>\nExample: \`${servers.rows[ index ].serv_prefix}config prefix &\`` ) );
         }
