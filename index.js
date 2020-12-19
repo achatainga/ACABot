@@ -4,7 +4,7 @@ const Database = require( './database' );
 const Discord = require( 'discord.js' );
 const client = new Discord.Client();
 const { Client } = require('pg')
-const connectionString = process.env.CONNECTION_URI
+const connectionString = process.env.DATABASE_URL
 const database = new Client( {
   connectionString,
   ssl: true
