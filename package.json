@@ -1,0 +1,19 @@
+{
+  "name": "ACABot",
+  "version": "1.0.0",
+  "description": "AChataingA's Discord Bot",
+  "main": "index.js",
+  "author": "Alejandro <a.chataing.a@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
