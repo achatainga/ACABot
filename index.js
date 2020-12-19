@@ -1,6 +1,5 @@
 require( 'dotenv' ).config();
 const { parse } = require( 'discord-command-parser' );
-const Database = require( './database' );
 const Discord = require( 'discord.js' );
 const client = new Discord.Client();
 const { Client } = require('pg')
