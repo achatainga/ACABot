@@ -88,3 +88,7 @@ client.login( process.env.BOT_TOKEN );
 app.listen( port, '0.0.0.0', () => {
   console.log( 'Listening on Port ' + port );
 } );
+
+app.get( '/', ( req, res ) => {
+  res.send( 'hello world' );
+} );
