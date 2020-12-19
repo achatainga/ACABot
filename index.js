@@ -81,3 +81,8 @@ client.on( 'message', message => {
 } );
 
 client.login( process.env.BOT_TOKEN );
+
+const port = process.env.PORT || 3000;
+app.listen( port, '0.0.0.0', () => {
+  console.log( 'Listening on Port ' + port );
+} );
