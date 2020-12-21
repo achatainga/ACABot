@@ -17,6 +17,8 @@
     "discord-command-parser": "^1.5.3",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "ethereum-regex": "^1.1.13",
+    "ethers": "^5.0.24",
     "express": "^4.17.1",
     "got": "^11.8.1",
     "opensea-js": "^1.1.10",

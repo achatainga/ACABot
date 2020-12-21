@@ -8,8 +8,12 @@ import axiosCookieJarSupport from 'axios-cookiejar-support';
 import tough from 'tough-cookie';
 axiosCookieJarSupport.default( axios );
 const cookieJar = new tough.CookieJar();
-import got from "got";
-import cheerio from 'cheerio';
+import ethereumRegex from 'ethereum-regex';
+import { ethers } from "ethers";
+const provider = new ethers.providers.InfuraProvider( "homestead" , process.env.INFURA_API_KEY );
+//https://mainnet.infura.io/v3/2578174201c843f5a5efe51a33580224
+
+
 dotenv.config();
 const app = express();
 const client = new Discord.Client();
@@ -26,12 +30,11 @@ const time = 60000;
 const port = process.env.PORT || 3000;
 let servers;
 
-const embedMessage = ( type = 'success', title = '', description = '', attachFiles = [] ) => {
+const embedMessage = ( type = 'success', title = '', description = '' ) => {
   return new Discord.MessageEmbed()
     .setColor( type === 'success' ? '#0099ff' : ( type === 'danger' ? '#F93A2F' : ( type === 'warning' ? '#CC7900' : '#969C9F' ) ) )
     .setTitle( title )
-    .setDescription( description )
-    .attachFiles( attachFiles )
+    .setDescription( description );
 }
 
 const extractColumn = ( arr, column ) => {
@@ -121,32 +124,32 @@ const commands = {
   'nft': async ( message, parsed ) => {
     try {
       var msg = await message.channel.send( 'Fetching NFTs' );
-      // let data = await got( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}` );
-      // const $ = cheerio.load( data.body );
-      // const address = $( '#ensControllerId' ).text();
-      // console.log( address );
-      
-      let data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${parsed.arguments[ 0 ]}&order_direction=desc&offset=0&limit=10`, {
-        jar: cookieJar, // tough.CookieJar or boolean
-        withCredentials: true, // If true, send cookie stored in jar
-      } ).then( res => res.data );
-      let i = 0;
-      let j = data.assets.length;
-      let list = [];
-      data.assets.map( asset => {
-        list.push( () => new Discord.MessageEmbed()
-          .setTitle( asset.name )
-          .setDescription( asset.description )
-          .setImage( asset.image_preview_url )
-          .setURL( asset.external_link )
-          .setAuthor( `${asset.owner.user.username}'s latest NFTs`, asset.owner.profile_img_url, `https://etherscan.io/address/${asset.owner.address}` )
-          .setTimestamp()
-          .setFooter( `Page ` + ( i > j ? `${i- --j}` : `` ) + `/${list.length}` + ( asset.last_sale != null ? ` • Last sale: ${asset.last_sale.payment_token.eth_price} ETH` : `` ) )
-        )
-        i++
-      } );
-      
-      sendList( msg, getList, list );
+      let address = await ( ethereumRegex().test( parsed.arguments[ 0 ] ) ? parsed.arguments[ 0 ] : provider.resolveName( parsed.arguments[ 0 ] ).then( address => address ) );
+      if ( address != null ) {
+        let data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${address}&order_direction=desc&offset=0&limit=10`, {
+          jar: cookieJar, // tough.CookieJar or boolean
+          withCredentials: true, // If true, send cookie stored in jar
+        } ).then( res => res.data );
+        let i = 0;
+        let j = data.assets.length;
+        let list = [];
+        data.assets.map( asset => {
+          list.push( () => new Discord.MessageEmbed()
+            .setTitle( asset.name )
+            .setDescription( asset.description )
+            .setImage( asset.image_preview_url )
+            .setURL( asset.external_link )
+            .setAuthor( `${asset.owner.user.username}'s latest NFTs`, asset.owner.profile_img_url, `https://etherscan.io/address/${asset.owner.address}` )
+            .setTimestamp()
+          )
+          i++
+        } );
+
+        sendList( msg, getList, list );
+      } else {
+        msg.edit( '‏‏‎ ‎' );
+        msg.edit( embedMessage( 'danger', "Error", "Address not found" ) );
+      }
     } catch ( error ) {
       console.log( error );
     }
@@ -161,7 +164,7 @@ const commands = {
 }
 
 const getList = ( i, list ) => {
-  return list[ i ](); // i+1 because we start at 0
+  return list[ i ]().setFooter( `Page ${i+1}/${list.length}` ); // i+1 because we start at 0
 }
 const filter = ( reaction, user ) => {
   reaction.users.cache.map( async user => await ( !user.bot ? reaction.users.remove( user.id ) : false ) );
