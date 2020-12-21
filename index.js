@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { parse } from 'discord-command-parser';
 import pkg from 'pg';
 import axios from 'axios';
+import fetch from 'node-fetch';
 dotenv.config();
 const app = express();
 const client = new Discord.Client();
