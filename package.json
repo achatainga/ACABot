@@ -18,6 +18,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "got": "^11.8.1",
     "opensea-js": "^1.1.10",
     "pg": "^8.5.1",
     "tough-cookie": "^4.0.0"
