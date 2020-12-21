@@ -78,28 +78,29 @@ app.listen( port, '0.0.0.0', () => {
 } );
 
 app.get( '/', ( req, res ) => {
-  res.send( 'hello world' );
+  res.send( `<a href="https://discord.com/api/oauth2/authorize?client_id=789723522770927617&permissions=8192&scope=bot">Invite bot to server</a>` );
 } );
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", CLIENT_ORIGIN);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-  res.header("Access-Control-Allow-Credentials", true); // <--- this is the only different line I added.
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
-  next();
-});
+// app.use( function( req, res, next ) {
+//   res.header( "Access-Control-Allow-Origin", CLIENT_ORIGIN );
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   res.header( "Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE" );
+//   res.header( "Access-Control-Allow-Credentials", true ); // <--- this is the only different line I added.
+//   if ( req.method === "OPTIONS" ) {
+//     return res.sendStatus( 204 );
+//   }
+//   next();
+// } );
 
 client.login( process.env.BOT_TOKEN );
 
 
 // Commands
 const commands = {
+  // Config
   'config': ( message, parsed ) => {
     const options = {
       "prefix": async ( message, parsed ) => {
@@ -120,6 +121,7 @@ const commands = {
     }
     return ( options[ parsed.arguments[ 0 ] ] || options[ 'default' ] )( message, parsed );
   },
+  // NFT
   'nft': async ( message, parsed ) => {
     try {
       var msg = await message.channel.send( 'Fetching NFTs' );
@@ -153,10 +155,12 @@ const commands = {
       console.log( error );
     }
   },
+  // Ping
   'ping': ( message, parsed ) => {
     console.log( 'pong' );
     return message.reply( 'pong' );
   },
+  // Default
   'default': () => {
     return typeof author !='undefined' && author.id != '789723522770927617' ? console.log( 'default' ) : console.log( 'same bot' );
   }
@@ -165,10 +169,12 @@ const commands = {
 const getList = ( i, list ) => {
   return list[ i ]().setFooter( `Page ${i+1}/${list.length}` ); // i+1 because we start at 0
 }
+
 const filter = ( reaction, user ) => {
   reaction.users.cache.map( async user => await ( !user.bot ? reaction.users.remove( user.id ) : false ) );
   return ( !user.bot ) && ( reactionArrow.includes( reaction.emoji.name ) ); // check if the emoji is inside the list of emojis, and if the user is not a bot
 }
+
 const onCollect = ( emoji, message, i, getList, list ) => {
   if ( emoji.name === emojiPrevious && i > 0 ) {
     message.edit( getList( --i, list ) );
@@ -177,6 +183,7 @@ const onCollect = ( emoji, message, i, getList, list ) => {
   }
   return i;
 }
+
 const createCollectorMessage = ( message, getList, list ) => {
   let i = 0;
   const collector = message.createReactionCollector( filter, { time } );
@@ -185,6 +192,7 @@ const createCollectorMessage = ( message, getList, list ) => {
   } );
   // collector.on('end', collected => message.clearReactions());
 }
+
 const sendList = ( msg, getList, list ) => {
   msg.edit( '‏‏‎ ‎' );
   msg.edit( getList( 0, list ) )
