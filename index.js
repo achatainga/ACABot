@@ -10,8 +10,7 @@ axiosCookieJarSupport.default( axios );
 const cookieJar = new tough.CookieJar();
 import ethereumRegex from 'ethereum-regex';
 import { ethers } from "ethers";
-const provider = new ethers.providers.InfuraProvider( "homestead" , process.env.INFURA_API_KEY );
-//https://mainnet.infura.io/v3/2578174201c843f5a5efe51a33580224
+const provider = new ethers.providers.EtherscanProvider( "homestead" );
 
 
 dotenv.config();
