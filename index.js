@@ -115,7 +115,7 @@ const commands = {
   'nft': async ( message, parsed ) => {
     try {
       var msg = await message.channel.send( 'Fetching NFTs' );
-      let data = await axios.get( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}`,{
+      let data = await fetch( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}`,{
         method: 'GET',
         credentials: 'include',
       } ).then( res => res.data );
