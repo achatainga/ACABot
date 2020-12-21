@@ -121,12 +121,12 @@ const commands = {
   'nft': async ( message, parsed ) => {
     try {
       var msg = await message.channel.send( 'Fetching NFTs' );
-      let data = await got( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}` );
-      const $ = cheerio.load( data.body );
-      const address = $( '#ensControllerId' ).text();
-      console.log( address );
+      // let data = await got( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}` );
+      // const $ = cheerio.load( data.body );
+      // const address = $( '#ensControllerId' ).text();
+      // console.log( address );
       
-      data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${address}&order_direction=desc&offset=0&limit=10`, {
+      let data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${parsed.arguments[ 0 ]}&order_direction=desc&offset=0&limit=10`, {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
       } ).then( res => res.data );
