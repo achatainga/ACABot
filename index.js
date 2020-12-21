@@ -126,7 +126,7 @@ const commands = {
       } ).then( res => res.data );
       const regexp = /(\<a\shref=("|')address\/)(.*)("|')/g;
       var address = regexp.exec( data )[ 3 ];
-      // console.log( address )
+      console.log( address )
       data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${address}&order_direction=desc&offset=0&limit=10`, {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
@@ -149,7 +149,7 @@ const commands = {
       
       sendList( msg, getList, list );
     } catch ( error ) {
-      // console.log( error );
+      console.log( error );
     }
   },
   'ping': ( message, parsed ) => {
