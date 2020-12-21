@@ -73,6 +73,20 @@ app.get( '/', ( req, res ) => {
   res.send( 'hello world' );
 } );
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", CLIENT_ORIGIN);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+  res.header("Access-Control-Allow-Credentials", true); // <--- this is the only different line I added.
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 client.login( process.env.BOT_TOKEN );
 
 
@@ -101,7 +115,10 @@ const commands = {
   'nft': async ( message, parsed ) => {
     try {
       var msg = await message.channel.send( 'Fetching NFTs' );
-      let data = await axios.get( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}` ).then( res => res.data );
+      let data = await axios.get( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}`,{
+        method: 'GET',
+        credentials: 'include',
+      } ).then( res => res.data );
       const regexp = /(\<a\shref=("|')address\/)(.*)("|')/g;
       var address = regexp.exec( data )[3];
       data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${address}&order_direction=desc&offset=0&limit=10` ).then( res => res.data );
