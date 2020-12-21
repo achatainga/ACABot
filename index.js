@@ -8,7 +8,8 @@ import axiosCookieJarSupport from 'axios-cookiejar-support';
 import tough from 'tough-cookie';
 axiosCookieJarSupport.default( axios );
 const cookieJar = new tough.CookieJar();
-import fetch from 'node-fetch';
+import got from "got";
+import cheerio from 'cheerio';
 dotenv.config();
 const app = express();
 const client = new Discord.Client();
@@ -120,13 +121,11 @@ const commands = {
   'nft': async ( message, parsed ) => {
     try {
       var msg = await message.channel.send( 'Fetching NFTs' );
-      let data = await axios.get( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}`, {
-        jar: cookieJar, // tough.CookieJar or boolean
-        withCredentials: true, // If true, send cookie stored in jar
-      } ).then( res => res.data );
-      const regexp = /(\<a\shref=("|')address\/)(.*)("|')/g;
-      var address = regexp.exec( data )[ 3 ];
-      console.log( address )
+      let data = await got( `https://etherscan.io/enslookup-search?search=${parsed.arguments[ 0 ]}` );
+      const $ = cheerio.load( data.body );
+      const address = $( '#ensControllerId' ).text();
+      console.log( address );
+      
       data = await axios.get( `https://api.opensea.io/api/v1/assets?owner=${address}&order_direction=desc&offset=0&limit=10`, {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
@@ -149,7 +148,7 @@ const commands = {
       
       sendList( msg, getList, list );
     } catch ( error ) {
-      console.log( error );
+      // console.log( error );
     }
   },
   'ping': ( message, parsed ) => {
