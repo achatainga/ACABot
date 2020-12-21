@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\achatainga\.yarn\bin\yarn.js remove web3 ethjs-ens ethjs-provider-http
+  C:\Program Files\nodejs\node.exe C:\Users\achatainga\.yarn\bin\yarn.js add axios tough-cookie axios-cookiejar-support
 
 PATH: 
   C:\Users\achatainga\.yarn\bin;C:\Users\achatainga\.config\yarn\global\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\achatainga\bin;C:\Python39\Scripts;C:\Python39;C:\Python27;C:\Python27\Scripts;C:\Python38\Scripts;C:\Python38;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\ProgramData\nvm;C:\Program Files\nodejs;C:\Program Files\Microsoft VS Code\bin;C:\tools\php74;C:\Program Files\OpenSSH-Win64;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\dotnet;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\FAHClient;C:\Users\achatainga\.windows-build-tools\python27;C:\Users\achatainga\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Oracle\VirtualBox;C:\tools\mysql\current\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Users\achatainga\AppData\Roaming\Composer\vendor\bin;C:\Users\achatainga\AppData\Local\Yarn\bin;C:\Users\achatainga\.dotnet\tools;C:\Users\achatainga\AppData\Local\Programs\Fiddler;C:\Program Files\heroku\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\achatainga\ACABot\node_modules\bufferutil\prebuilds\win32-x64\node.napi.node'
+  Error: EPERM: operation not permitted, unlink 'C:\achatainga\ACABot\node_modules\utf-8-validate\prebuilds\win32-x64\node.napi.node'
 
 npm manifest: 
   {
@@ -27,7 +27,7 @@ npm manifest:
     "private": true,
     "type": "module",
     "scripts": {
-      "start": "nodemon index.js"
+      "start": "node index.js"
     },
     "dependencies": {
       "axios": "^0.21.0",

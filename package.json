@@ -8,16 +8,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "axios-cookiejar-support": "^1.0.1",
     "discord-command-parser": "^1.5.3",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "opensea-js": "^1.1.10",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
