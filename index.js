@@ -141,14 +141,14 @@ const commands = {
           .setURL( asset.external_link )
           .setAuthor( `${asset.owner.user.username}'s latest NFTs`, asset.owner.profile_img_url, `https://etherscan.io/address/${asset.owner.address}` )
           .setTimestamp()
-          .setFooter( `Page ${i- --j}/${list.length}` + ( asset.last_sale != null ? ` • Last sale: ${asset.last_sale.payment_token.eth_price} ETH` : `` ) )
+          .setFooter( `Page ` + ( i > j ? `${i- --j}` : `` ) + `/${list.length}` + ( asset.last_sale != null ? ` • Last sale: ${asset.last_sale.payment_token.eth_price} ETH` : `` ) )
         )
         i++
       } );
       
       sendList( msg, getList, list );
     } catch ( error ) {
-      // console.log( error );
+      console.log( error );
     }
   },
   'ping': ( message, parsed ) => {
