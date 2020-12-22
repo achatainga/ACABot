@@ -65,9 +65,6 @@ app.use( gatsyExpress( 'config/gatsby-express.json', {
   template: 'public/404/index.html',
   redirectSlashes: true,
 } ) );
-app.get( '/discord_client_id', function ( req, res ) {
-  res.send( process.env.DISCORD_CLIENT_ID );
-} );
 
 // Funtions
 const createCollectorMessage = ( message, getList, list ) => {

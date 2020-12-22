@@ -10,8 +10,7 @@
     "postinstall": "gatsby build",
     "dev": "gatsby clean && gatsby develop",
     "start": "node index.js",
-    "start_1": "nodemon index.js",
-    "build": "gatsby build"
+    "start_1": "nodemon index.js"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
