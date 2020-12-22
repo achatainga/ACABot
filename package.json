@@ -7,8 +7,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "postinstall": "gatsby build",
     "dev": "gatsby clean && gatsby develop",
-    "start": "gatsby build && node index.js",
+    "start": "node index.js",
     "start_1": "nodemon index.js",
     "build": "gatsby build"
   },
